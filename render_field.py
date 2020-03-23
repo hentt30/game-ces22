@@ -11,11 +11,7 @@ def function render_field (background, screen, game, currentPlayerId)
     width, height = const_values.WIDTH, const_values.HEIGHT
 
     # fill the context with the background color
-    screen.fill (background.color)
-
-    # print the look of the opponent's disc
-    const player = game.state.player2
-    screen.fill (background.player2)
+     screen.fill (game.background_color)
 
     # draw the center of circle
     pygame.draw.circle(screen, const_values.WHITE, (int(width / 2), int(height / 2)), 70, 5)
@@ -34,6 +30,5 @@ def function render_field (background, screen, game, currentPlayerId)
     # draw the field divider
     pygame.draw.rect(screen, const_values.WHITE, (width / 2, 0, 3, height))
 
-    # print the look of the current player disc
-    const current_player = game.state.player1
-    screen.fill (background.player1)
+    # pause the game
+    screen.blit(pause_image, (width / 2 - 32, height - 70))
