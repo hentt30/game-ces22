@@ -22,7 +22,7 @@ Class Puck :
         self.speed = self.speed * constants.FRICTION
 
 
-    def function update( vx, vy)
+    def update( vx, vy):
     """
         It receives the velocity values and update the puck
     """

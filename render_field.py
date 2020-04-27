@@ -4,7 +4,7 @@ import screeen
 import constants
 
 
-def function render_field (screen, game)
+def render_field (screen, game):
     """
     this function renders some aspects of the field
     """
