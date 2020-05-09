@@ -4,7 +4,7 @@ from game.config.constants import *
 
 
 class Paddle:
-    def __init__(self, x, y, side):
+    def __init__(self, x, y, side) -> None:
         self.x = x
         self.y = y
         self.radius = PADDLE_SIZE
@@ -16,21 +16,21 @@ class Paddle:
         self.field_width = WIDTH
         self.angle = 0
 
-    def check_vertical_bounds(self):
+    def check_vertical_bounds(self) -> None:
         # top
         if (self.y - self.radius <= 0):
             self.y = self.radius
         elif (self.y + self.radius > self.field_height):
             self.y = self.field_height - self.radius
 
-    def check_left_boundary(self):
+    def check_left_boundary(self) -> None:
         if (self.x - self.radius <= 0):
             self.x = self.radius
         elif (self.x + self.radius > int(self.field_width / 2)
               and self.side == LEFT):
             self.x = int(self.field_width / 2) - self.radius
 
-    def check_right_boundary(self):
+    def check_right_boundary(self) -> None:
 
         if (self.x + self.radius > self.field_width):
             self.x = self.field_width - self.radius
@@ -39,7 +39,7 @@ class Paddle:
               and self.side == RIGHT):
             self.x = int(self.field_width / 2) + self.radius
 
-    def move(self, up, down, left, right):
+    def move(self, up, down, left, right) -> None:
         dx, dy = self.x, self.y
         self.x += (right - left) * self.speed * self.time_delta
         self.y += (down - up) * self.speed * self.time_delta
@@ -49,14 +49,10 @@ class Paddle:
 
         self.angle = math.atan2(dy, dx)
 
-    def get_pos(self):
+    def get_pos(self) -> tuple:
         return self.x, self.y
 
-    def reset(self, start_x, start_y):
-        self.x = start_x
-        self.y = start_y
-
-    def update(self):
+    def update(self) -> None:
         key_presses = key_presses = pygame.key.get_pressed()
         if (self.side == LEFT):
             up = key_presses[pygame.K_w]

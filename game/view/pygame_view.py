@@ -7,10 +7,8 @@ from game.config.constants import *
 
 
 class PyGameView(object):
-    def __init__(self, event_manager, model) -> None:
+    def __init__(self, event_manager) -> None:
         self.event_manager = event_manager
-        self.model = model
-        # Subscribe event
         self.event_manager.subscribe_listener(self)
         self.is_initialized = False
         self.screen = None
@@ -35,7 +33,7 @@ class PyGameView(object):
         elif (isinstance(event, ChangeStateEvent)):
             if (not self.is_initialized):
                 return
-            self.update()
+            self.update(event.state)
         elif (isinstance(event, TickEvent)):
             if (not self.is_initialized):
                 return
@@ -50,20 +48,16 @@ class PyGameView(object):
         self.paddle_right.render(self.screen)
         self.paddle_left.render(self.screen)
         self.puck.render(self.screen)
-        #self.screen.blit("", (0, 0))
         pygame.display.flip()
 
-    def update(self) -> None:
+    def update(self, new_state) -> None:
         """ Atualiza a posição dos objetos
         """
-        new_state = self.model.state.get_state()
-
         self.paddle_right.update(new_state[PADDLE_RIGHT])
         self.paddle_left.update(new_state[PADDLE_LEFT])
 
     def initialize(self) -> None:
-        """
-        Inicializa o jogo
+        """Inicializa o jogo
         """
         result = pygame.init()
         pygame.font.init()

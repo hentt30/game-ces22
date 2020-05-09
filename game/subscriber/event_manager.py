@@ -27,7 +27,7 @@ class EventManager(object):
             del self.listeners[listener]
 
     def post(self, event) -> None:
-        """ Avisa os
+        """ Avisa os inscritos que ocorreu algum evento
         """
         for listener in self.listeners.keys():
             listener.notify(event)

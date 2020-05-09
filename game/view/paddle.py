@@ -4,7 +4,7 @@ from game.config.constants import *
 
 
 class Paddle:
-    def __init__(self, x, y, color):
+    def __init__(self, x, y, color) -> None:
         self.x = x
         self.y = y
         self.radius = PADDLE_SIZE
@@ -14,7 +14,7 @@ class Paddle:
         self.x = position[0]
         self.y = position[1]
 
-    def render(self, screen):
+    def render(self, screen) -> None:
         position = (int(self.x), int(self.y))
 
         pygame.draw.circle(screen, self.color, position, self.radius, 0)

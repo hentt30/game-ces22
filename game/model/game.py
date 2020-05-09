@@ -21,7 +21,7 @@ class GameEngine:
         if (isinstance(event, TickEvent)):
             self.state.update()
 
-    def run(self):
+    def run(self) -> None:
         """ Inicia o  jogo
         """
         self.keep_going = True

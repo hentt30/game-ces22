@@ -8,8 +8,8 @@ def main() -> None:
     event_manager = EventManager()
 
     game_engine = GameEngine(event_manager)
-    keyboard = Keyboard(event_manager, game_engine)
-    game_view = PyGameView(event_manager, game_engine)
+    keyboard = Keyboard(event_manager)
+    game_view = PyGameView(event_manager)
 
     game_engine.run()
 
