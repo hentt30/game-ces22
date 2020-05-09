@@ -1,14 +1,6 @@
 from weakref import WeakKeyDictionary
 
 
-class Event(object):
-    """Essa é uma superclasse para qualquer evento que possa ser gerado por
-    um objeto e enviado para o agent manager
-    """
-    def __init__(self) -> None:
-        self.name = "Generic Event"
-
-
 class EventManager(object):
     """ Essa classe é responsável por receber os eventos e notificar os objetos competententes
     """
