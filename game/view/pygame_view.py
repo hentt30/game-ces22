@@ -1,5 +1,9 @@
 import pygame
+from game.view.field import Field
+from game.view.puck import Puck
+from game.view.paddle import Paddle
 from game.subscriber.events import *
+from game.config.constants import *
 
 
 class PyGameView(object):
@@ -12,6 +16,13 @@ class PyGameView(object):
         self.screen = None
         self.clock = None
         self.small_font = None
+        self.fps = FPS
+        self.field = Field()
+        self.paddle_right = Paddle(PADDLE_RIGHT_X, PADDLE_RIGHT_Y,
+                                   PADDLE_RIGHT_COLOR)
+        self.paddle_left = Paddle(PADDLE_LEFT_X, PADDLE_LEFT_Y,
+                                  PADDLE_LEFT_COLOR)
+        self.puck = Puck(WIDTH / 2, HEIGHT / 2)
 
     def notify(self, event) -> None:
         """ Notifica a tela dos eventos possíveis
@@ -21,20 +32,34 @@ class PyGameView(object):
         elif (isinstance(event, QuitEvent)):
             self.is_initialized = False
             pygame.quit()
+        elif (isinstance(event, ChangeStateEvent)):
+            if (not self.is_initialized):
+                return
+            self.update()
         elif (isinstance(event, TickEvent)):
             if (not self.is_initialized):
                 return
             self.render_play()
-            self.clock.tick(30)
 
     def render_play(self) -> None:
         """ Renderiza o jogo
         """
+        self.clock.tick(self.fps)
         self.screen.fill((0, 0, 0))
-        somewords = self.small_font.render(
-            'You are Playing the game. F1 for help.', True, (0, 255, 0))
-        self.screen.blit(somewords, (0, 0))
+        self.field.render(self.screen)
+        self.paddle_right.render(self.screen)
+        self.paddle_left.render(self.screen)
+        self.puck.render(self.screen)
+        #self.screen.blit("", (0, 0))
         pygame.display.flip()
+
+    def update(self) -> None:
+        """ Atualiza a posição dos objetos
+        """
+        new_state = self.model.state.get_state()
+
+        self.paddle_right.update(new_state[PADDLE_RIGHT])
+        self.paddle_left.update(new_state[PADDLE_LEFT])
 
     def initialize(self) -> None:
         """
@@ -42,8 +67,8 @@ class PyGameView(object):
         """
         result = pygame.init()
         pygame.font.init()
-        pygame.display.set_caption('demo game')
-        self.screen = pygame.display.set_mode((600, 60))
+        pygame.display.set_caption('air hockey')
+        self.screen = pygame.display.set_mode((1200, 600))
         self.clock = pygame.time.Clock()
         self.small_font = pygame.font.Font(None, 40)
         self.is_initialized = True

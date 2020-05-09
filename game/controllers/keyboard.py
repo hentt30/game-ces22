@@ -22,13 +22,3 @@ class Keyboard(object):
                 # Se a janela fechar
                 if (event.type == pygame.QUIT):
                     self.event_manager.post(QuitEvent())
-                if (event.type == pygame.KEYDOWN):
-                    if (event.key == pygame.K_ESCAPE):
-                        self.event_manager.post(StateChangeEvent(None))
-                    else:
-                        self.keydown_play(event)
-
-    def keydown_play(self, event):
-        """ Gerencia as teclas apertadas durante o jogo
-        """
-        self.event_manager.post(InputEvent(event.unicode, None))

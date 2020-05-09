@@ -1,8 +1,7 @@
-
-import sys 
-
+import sys
 """ All sizes in pixels and speeds in pixels per second """
 FPS = 60
+TIME_DELTA = 0.016
 
 # Screen size
 HEIGHT = 600
@@ -14,12 +13,14 @@ PADDLE_SPEED = 400
 PADDLE_MASS = 2000
 
 # Paddle 1 start position.
-PADDLE1X = 20
-PADDLE1Y = HEIGHT / 2
+PADDLE_LEFT_X = 60
+PADDLE_LEFT_Y = HEIGHT / 2
+PADDLE_LEFT_COLOR = (200, 200, 200)
 
 # Paddle 2 start position.
-PADDLE2X = WIDTH - 20
-PADDLE2Y = HEIGHT / 2
+PADDLE_RIGHT_X = WIDTH - 60
+PADDLE_RIGHT_Y = HEIGHT / 2
+PADDLE_RIGHT_COLOR = (150, 150, 0)
 
 # Puck
 PUCK_SIZE = 30
@@ -28,8 +29,8 @@ PUCK_MASS = 500
 
 # Goal Position
 GOAL_WIDTH = 180
-GOAL_Y1 = HEIGHT / 2 - GOAL_WIDTH / 2
-GOAL_Y2 = HEIGHT / 2 + GOAL_WIDTH / 2
+GOAL_Y = HEIGHT / 2 - GOAL_WIDTH / 2
+GOAL_Y_RIGHT = HEIGHT / 2 + GOAL_WIDTH / 2
 
 # Speed levels
 EASY = 450
@@ -39,7 +40,7 @@ HARD = 850
 # color
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-
+BACKGROUND_COLOR = (0, 255, 0)
 # Scoring
 SCORE_LIMIT = 5
 ROUND_LIMIT = 2
@@ -56,3 +57,12 @@ PAUSE_BUTTON_RADIUS = 32
 
 # info button
 INFO_BUTTON_RADIUS = 32
+
+# sides
+LEFT = 0
+RIGHT = 1
+
+# strings
+
+PADDLE_RIGHT = "paddle_right"
+PADDLE_LEFT = "paddle_left"

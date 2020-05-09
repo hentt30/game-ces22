@@ -39,3 +39,11 @@ class InitializeEvent(Event):
     """
     def __init__(self):
         self.name = "Init Event"
+
+
+
+class ChangeStateEvent(Event):
+    """ Inicializa tudo
+    """
+    def __init__(self):
+        self.name = "Change State Event"

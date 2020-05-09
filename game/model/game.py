@@ -1,4 +1,5 @@
 from game.subscriber.events import *
+from game.model.state import State
 
 
 class GameEngine:
@@ -9,12 +10,16 @@ class GameEngine:
         self.event_manager = event_manager
         self.event_manager.subscribe_listener(self)
         self.keep_going = False
+        self.state = State(event_manager)
 
     def notify(self, event) -> None:
         """ Receber a notificação do gerenciador de eventos
         """
         if (isinstance(event, QuitEvent)):
             self.keep_going = False
+
+        if (isinstance(event, TickEvent)):
+            self.state.update()
 
     def run(self):
         """ Inicia o  jogo
