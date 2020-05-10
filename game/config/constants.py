@@ -10,7 +10,6 @@ WIDTH = 1200
 # Paddle
 PADDLE_SIZE = 40
 PADDLE_SPEED = 400
-PADDLE_MASS = 2000
 
 # Paddle 1 start position.
 PADDLE_LEFT_X = 60
@@ -25,7 +24,6 @@ PADDLE_RIGHT_COLOR = (150, 150, 0)
 # Puck
 PUCK_SIZE = 30
 PUCK_SPEED = 450
-PUCK_MASS = 500
 
 # Goal Position
 GOAL_WIDTH = 180

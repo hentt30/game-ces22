@@ -9,7 +9,6 @@ class Paddle:
         self.y = y
         self.radius = PADDLE_SIZE
         self.speed = PADDLE_SPEED
-        self.mass = PADDLE_MASS
         self.side = side  # 0 left and 1 right
         self.time_delta = TIME_DELTA
         self.field_height = HEIGHT
