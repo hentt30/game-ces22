@@ -1,11 +1,12 @@
 import pygame
+import random
 from math import sin, cos, pi, atan
 from game.config.constants import *
 from utils import dist, signal
 
 
 class Puck:
-    def __init__(self, x = WIDTH/2, y = HEIGHT/2) -> None:
+    def __init__(self, x = WIDTH/2, y = HEIGHT/2, crazy_mode = False) -> None:
         self.x = x
         self.y = y
         self.radius = PUCK_SIZE
@@ -14,6 +15,11 @@ class Puck:
         self.field_height = HEIGHT
         self.field_width = WIDTH
         self.angle = pi/2
+        self.crazy_mode = crazy_mode
+
+    def set_position(self, position) -> None:
+        self.x = position[0]
+        self.y = position[1]
 
     def check_vertical_bounds(self) -> None:
         
@@ -52,10 +58,21 @@ class Puck:
 
     def wall_collision(self, obj) -> None:
 
-        if obj == 'RIGHT' or obj == 'LEFT':
-            self.angle = pi - self.angle
-        elif obj == 'TOP' or obj == 'BOTTOM':
-            self.angle = -self.angle
+        if self.crazy_mode:
+            if obj == 'RIGHT':
+                self.angle = random.uniform(pi/2, 3*pi/2)
+            elif obj == 'LEFT':
+                self.angle = random.uniform(-pi/2, pi/2)
+            elif obj == 'TOP':
+                self.angle = random.uniform(-pi, 0)
+            else:
+                self.angle = random.uniform(0, pi)
+
+        else:    
+            if obj == 'RIGHT' or obj == 'LEFT':
+                self.angle = pi - self.angle
+            elif obj == 'TOP' or obj == 'BOTTOM':
+                self.angle = -self.angle
 
     def paddle_collision(self, paddle) -> None:
 
