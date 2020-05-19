@@ -105,3 +105,26 @@ class Puck:
         self.check_paddle(left_paddle)
         self.check_paddle(rigth_paddle)
         self.move()
+        
+    ####
+    def reset(self, speed, player, option):
+        if option== 1:
+            #game reset
+            if player == 1:
+                self.angle = random.uniform(-pi, 0)
+            elif player == 2:
+                self.angle = random.uniform(0, pi)
+            self.speed = speed
+            self.x = WIDTH / 2
+            self.y = HEIGHT/ 2
+        else:
+            #round reset
+            if player == 1:
+                self.x = 3*WIDTH/4
+            elif player == 2:
+                self.x = WIDTH/4
+            self.y = HEIGHT/2
+            self.angle = 0
+            self.speed = 0
+
+    ###

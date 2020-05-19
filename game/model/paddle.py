@@ -68,3 +68,10 @@ class Paddle:
         self.check_vertical_bounds()
         self.check_left_boundary()
         self.check_right_boundary()
+
+    ###
+    def reset(self, first_x, first_y):
+        self.x = first_x
+        self.y = first_y
+    ###
+
