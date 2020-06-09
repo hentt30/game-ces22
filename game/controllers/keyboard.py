@@ -30,3 +30,30 @@ class NotifyRoundChange(Keyboard):
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_SPACE:
                             return
+
+
+
+class NotifyEndGame(Keyboard):
+    """ Realiza a notificação  de mudança de fim de jogo pela ação do teclado
+    """
+    def notify(self,event)->None:
+        # Get inputs
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_press = pygame.mouse.get_pressed()
+
+        if (isinstance(event, TickEvent)):
+            for event in pygame.event.get():
+                # Press R to reset game
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    return 1
+                # Press M to go to menu
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+                    return 2
+                # Press esc or Q to quit
+                elif event.type == pygame.KEYDOWN and (event.key == pygame.K_q or event.key == pygame.K_ESCAPE):
+                    pygame.quit()
+                    sys.exit()
+
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()    

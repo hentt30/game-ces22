@@ -98,14 +98,15 @@ class Puck:
                 self.angle = -self.angle + 2*betha + pi
 
     def update(self, left_paddle, rigth_paddle) -> None:
-        
+
         self.check_vertical_bounds()
         self.check_left_boundary()
         self.check_right_boundary()
         self.check_paddle(left_paddle)
         self.check_paddle(rigth_paddle)
         self.move()
-        
+
+    #### 
     def reset(self, speed, player,option):
         #game reset
         if option==1:
@@ -126,5 +127,5 @@ class Puck:
             self.y = HEIGHT/2
             self.angle = 0
             self.speed = 0
-
+                    
     ###

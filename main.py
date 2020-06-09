@@ -11,13 +11,9 @@ puck = Puck(WIDTH / 2, HEIGHT / 2)
 paddle_left = Paddle(PADDLE_LEFT_X, PADDLE_LEFT_Y,0)
 paddle_right = Paddle(PADDLE_RIGHT_X, PADDLE_RIGHT_Y,1)
 
-
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-score1= 0 
-score2= 0
 
 
-###
 
 def main() -> None:
     event_manager = EventManager()

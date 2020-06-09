@@ -1,6 +1,7 @@
 from game.subscriber.events import *
 from game.model.paddle import Paddle
 from game.config.constants import *
+from game.view.pygame_view import PyGameView
 import pygame
 
 class State(object):
@@ -39,16 +40,18 @@ class Placar:
         screen.blit(text1, [40, 0])
         screen.blit(text2, [WIDTH - 150, 0])
 
-    def update_placar(self, speed, puck,paddle1,paddle2)->None:
+    def update_placar(self, speed, puck,)->None:
         """ Verifica o retorno de check_goal e atualiza o placar"""
         # Hits the left goal!
         if Goal.check_goal(self,LEFT,puck):
             self.score2 += 1
-            ResetGame.reset_conditions(self,puck,paddle1,paddle2,speed, 1,1)
+            ResetGame.reset_conditions(self,puck,State(self.event_manager).paddle_left,
+            State(self.event_manager).paddle_right,speed, 1,1)
         # Hits the left goal!
         if Goal.check_goal(self,RIGHT,puck):
             self.score1 += 1
-            ResetGame.reset_conditions(self,puck,paddle1,paddle2,speed, 2,1)
+            ResetGame.reset_conditions(self,puck,State(self.event_manager).paddle_left,
+            State(self.event_manager).paddle_right,speed, 2,1)
 
 
 class Round:
@@ -72,23 +75,38 @@ class Round:
         self.print_text(screen, "Round "+str(self.round_no), (WIDTH/2, 20), round_font, BLACK)
         self.print_text(screen, str(self.round_p1) + " : " + str(self.round_p2), (WIDTH / 2, 50), round_font, BLACK)
 
-    def update_round(self,puck,paddle1,paddle2,score1,score2)->None:
+    def update_round(self,puck,screen,speed)->None:
         """ Verifica as condições necessárias e atualiza o round do jogo"""
-        if score1 == SCORE_LIMIT:
+        if Placar.score1 == SCORE_LIMIT:
             if not self.round_p1 + 1 == ROUND_LIMIT:
-                RoundChange.notify_round_change(self, self.round_no, score1, score2)
+                RoundChange.notify_round_change(self, self.round_no, Placar.score1, Placar.score2)
             self.round_no += 1
             self.round_p1 += 1
-            score1, score2 = 0, 0
-            ResetGame.reset_conditions(self,puck,paddle1,paddle2,0,1,2)
+            Placar.score1, Placar.score2 = 0, 0
+            ResetGame.reset_conditions(self,puck,State(self.event_manager).paddle_left,
+            State(self.event_manager).paddle_right,0,1,2)
 
-        if score2 == SCORE_LIMIT:
+        if Placar.score2 == SCORE_LIMIT:
             if not self.round_p2 + 1 == ROUND_LIMIT:
-                RoundChange.notify_round_change(self, self.round_no, score1, score2)
+                RoundChange.notify_round_change(self, self.round_no, Placar.score1, Placar.score2)
             self.round_no += 1
             self.round_p2 += 1
-            score1, score2 = 0, 0
-            ResetGame.reset_conditions(self,puck,paddle1,paddle2,0,2,2)
+            Placar.score1, Placar.score2 = 0, 0
+            ResetGame.reset_conditions(self,puck,State(self.event_manager).paddle_left,
+            State(self.event_manager).paddle_right,0,2,2)
+
+        if self.round_p1 == ROUND_LIMIT:  # Player one denotes left player
+            self.get_winner(1,puck,screen,speed)
+        if self.round_p2 == ROUND_LIMIT:  # Player two denotes right player
+            self.get_winner(2,puck,screen,speed)
+
+    def  get_winner(self,player,puck,screen,speed)->None:
+        """ Define o vencedor"""
+        if EndGame.end(self,puck, State, Round, Placar, speed, EndGame.game_end(self,screen,player)):
+            #Modifica musica aqui
+            return
+        else:
+            self.get_round(screen)
 
 
 ###################

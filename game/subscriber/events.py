@@ -1,6 +1,7 @@
 ####
 import sys
 import pygame
+import random as rand
 from game.model.puck import Puck
 from game.model.paddle import Paddle
 from game.config.constants import *
@@ -123,3 +124,32 @@ class RoundChange(TickEvent):
 
             pygame.display.flip()
             clock.tick(10)
+
+class EndGame(QuitEvent):
+    def __int__(self)->None:
+        self.name = "End Game"
+    
+    def game_end(self,screen, player):
+        #Terminar de implementar
+        return 1
+
+
+    def end(self,puck,state,round,placar,speed,option)->None:
+        # reset game with everything else same
+        if option == 1:
+            ResetGame.reset_conditions(self,puck,placar.paddle_left,placar.paddle_right,speed,1,1)
+            ResetGame.reset_conditions(self,puck,placar.paddle_left,placar.paddle_right,speed,2,1)
+            placar.score1, placar.score2 = 0, 0
+            round.round_p1, round.round_p2 = 0, 0
+            round.round_no = 1
+            return False  # Tells that game should continue with reset
+
+        # goes to menu
+        elif option == 2:
+            return True  # Game should restart at Start Screen
+
+        # Quit game
+        else:
+            sys.exit()
+
+###########################
