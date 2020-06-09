@@ -2,7 +2,7 @@ import pygame
 import random
 from math import sin, cos, pi, atan
 from game.config.constants import *
-from utils import dist, signal
+from game.model.utils import dist, signal
 
 
 class Puck:
@@ -98,7 +98,7 @@ class Puck:
                 self.angle = -self.angle + 2*betha + pi
 
     def update(self, left_paddle, rigth_paddle) -> None:
-
+        
         self.check_vertical_bounds()
         self.check_left_boundary()
         self.check_right_boundary()
@@ -106,10 +106,9 @@ class Puck:
         self.check_paddle(rigth_paddle)
         self.move()
         
-    ####
-    def reset(self, speed, player, option):
-        if option== 1:
-            #game reset
+    def reset(self, speed, player,option):
+        #game reset
+        if option==1:
             if player == 1:
                 self.angle = random.uniform(-pi, 0)
             elif player == 2:
@@ -117,8 +116,9 @@ class Puck:
             self.speed = speed
             self.x = WIDTH / 2
             self.y = HEIGHT/ 2
-        else:
-            #round reset
+
+        #round reset
+        if option==2:
             if player == 1:
                 self.x = 3*WIDTH/4
             elif player == 2:

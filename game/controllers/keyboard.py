@@ -17,3 +17,16 @@ class Keyboard(object):
             for event in pygame.event.get():
                 if (event.type == pygame.QUIT):
                     self.event_manager.post(QuitEvent())
+
+
+class NotifyRoundChange(Keyboard):
+    """ Realiza a notificação  de mudança de round pela ação do teclado
+    """
+    def notify(self,event)->None:
+        if(isinstance(event, TickEvent)):
+            for event in pygame.event.get():
+                    if event.type == quit():
+                        self.event_manager.post(QuitEvent())
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            return

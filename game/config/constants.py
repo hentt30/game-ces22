@@ -61,6 +61,10 @@ LEFT = 0
 RIGHT = 1
 
 # strings
-
 PADDLE_RIGHT = "paddle_right"
 PADDLE_LEFT = "paddle_left"
+
+# vetor de cores
+COLORS = [[(46, 120, 50), (66, 152, 60)], [(200, 72, 72), (255, 92, 92)],
+          [(0, 158, 239), (100, 189, 219)], [(221, 229, 2), (252, 255, 59)],
+          [(232, 114, 46), (244, 133, 51)]]
