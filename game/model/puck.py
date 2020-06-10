@@ -10,7 +10,7 @@ class Puck:
         self.x = x
         self.y = y
         self.radius = PUCK_SIZE
-        self.speed = PUCK_SPEED
+        self.speed = 0
         self.time_delta = TIME_DELTA
         self.field_height = HEIGHT
         self.field_width = WIDTH
@@ -76,6 +76,7 @@ class Puck:
 
     def paddle_collision(self, paddle) -> None:
 
+        self.speed = PUCK_SPEED
         px = paddle.get_pos()[0]
         py = paddle.get_pos()[1]
         if self.x == px:
