@@ -165,7 +165,7 @@ class EndGame(QuitEvent):
 
             # drawing buttons for reset, menu and exit.
             return PressButton.draw_buttons(self,screen)
-            #Terminar de implementar aqui!!!! (Chamar outra função)
+            
             pygame.display.update()
             clock.tick(10)
 
