@@ -1,5 +1,6 @@
-{"python.linting.pylintArgs": [
-    "--extension-pkg-whitelist=pygame",
-    "--erros-only"
-]
+{
+    "python.pythonPath": "C:\\Program Files\\Python37\\python.exe",
+    "python.linting.pylintArgs": [
+        "--extension-pkg-whitelist=pygame","--errors-only"
+    ]
 }

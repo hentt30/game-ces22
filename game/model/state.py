@@ -62,18 +62,11 @@ class Round:
         self.round_p2=0
 
  
-    def print_text(self,screen, text, center, font, color):
-        """ Definir posição e formato do texto pro round """
-        text_surf= font.render(text, True, color)
-        text_rect= text_surf.get_rect()
-        text_rect.center = center
-        screen.blit(text_surf, text_rect)
-
     def get_round(self,screen):
         """ Define o round do jogo """
         round_font = pygame.font.SysFont("comicsans", 45)
-        self.print_text(screen, "Round "+str(self.round_no), (WIDTH/2, 20), round_font, BLACK)
-        self.print_text(screen, str(self.round_p1) + " : " + str(self.round_p2), (WIDTH / 2, 50), round_font, BLACK)
+        EndGame.print_text(self,screen, "Round "+str(self.round_no), (WIDTH/2, 20), round_font, BLACK)
+        EndGame.print_text(self,screen, str(self.round_p1) + " : " + str(self.round_p2), (WIDTH / 2, 50), round_font, BLACK)
 
     def update_round(self,puck,screen,speed)->None:
         """ Verifica as condições necessárias e atualiza o round do jogo"""
@@ -101,7 +94,7 @@ class Round:
             self.get_winner(2,puck,screen,speed)
 
     def  get_winner(self,player,puck,screen,speed)->None:
-        """ Define o vencedor"""
+        """ Define o vencedor """
         if EndGame.end(self,puck, State, Round, Placar, speed, EndGame.game_end(self,screen,player)):
             #Modifica musica aqui
             return

@@ -144,9 +144,10 @@ class EndGame(QuitEvent):
         text_rect.center = center
         screen.blit(text_surf, text_rect)
     
-    def game_end(self,screen, clock, player):
+    def game_end(self,screen, player):
         large_text = pygame.font.Font('freesansbold.ttf', 45)
         small_text = pygame.font.Font('freesansbold.ttf', 30)
+        clock = pygame.time.Clock()
 
         while True:
             # to smoothly shine winning message
