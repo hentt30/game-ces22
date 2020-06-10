@@ -1,5 +1,6 @@
 from game.subscriber.events import *
 from game.model.paddle import Paddle
+from game.model.puck import Puck
 from game.config.constants import *
 from game.view.pygame_view import PyGameView
 import pygame
@@ -9,11 +10,13 @@ class State(object):
         self.event_manager = event_manager
         self.paddle_right = Paddle(PADDLE_RIGHT_X, PADDLE_RIGHT_Y, RIGHT)
         self.paddle_left = Paddle(PADDLE_LEFT_X, PADDLE_LEFT_Y, LEFT)
+        self.puck = Puck()
 
     def get_state(self) -> None:
         state = {
             "paddle_right": self.paddle_right.get_pos(),
-            "paddle_left": self.paddle_left.get_pos()
+            "paddle_left": self.paddle_left.get_pos(),
+            "puck": self.puck.get_pos()
         }
         return state
 
@@ -22,6 +25,7 @@ class State(object):
         """
         self.paddle_left.update()
         self.paddle_right.update()
+        self.puck.update(self.paddle_left, self.paddle_right)
         self.event_manager.post(ChangeStateEvent(self.get_state()))
 
 #####################

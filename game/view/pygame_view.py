@@ -55,6 +55,7 @@ class PyGameView(object):
         """
         self.paddle_right.update(new_state[PADDLE_RIGHT])
         self.paddle_left.update(new_state[PADDLE_LEFT])
+        self.puck.update(new_state[PUCK])
 
     def initialize(self) -> None:
         """Inicializa o jogo

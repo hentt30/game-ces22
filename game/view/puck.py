@@ -9,6 +9,10 @@ class PuckView(object):
         self.radius = PUCK_SIZE
         self.white = WHITE
 
+    def update(self, position) -> None:
+        self.x = position[0]
+        self.y = position[1]
+
     def render(self, screen) -> None:
         pygame.draw.circle(screen, self.white, (int(self.x), int(self.y)),
                            self.radius)
