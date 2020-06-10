@@ -52,7 +52,7 @@ class Paddle:
         return self.x, self.y
 
     def update(self) -> None:
-        key_presses = key_presses = pygame.key.get_pressed()
+        key_presses = pygame.key.get_pressed()
         if (self.side == LEFT):
             up = key_presses[pygame.K_w]
             down = key_presses[pygame.K_s]
