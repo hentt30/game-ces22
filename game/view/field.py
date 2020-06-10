@@ -11,7 +11,8 @@ class Field(object):
         self.white = WHITE
         self.black = BLACK
         self.goal_width = GOAL_WIDTH
-        self.goal_y = GOAL_Y
+        self.goal_yleft = GOAL_Y_LEFT
+        self.goal_yright = GOAL_Y_RIGHT
         self.background_color = BACKGROUND_COLOR
 
     def draw_center_circle(self, screen) -> None:
@@ -39,9 +40,9 @@ class Field(object):
         """ Desenha os gols
         """
         pygame.draw.rect(screen, self.black,
-                         (0, self.goal_y, 5, self.goal_width))
+                         (0, self.goal_yleft, 5, self.goal_width))
         pygame.draw.rect(screen, self.black,
-                         (self.width - 5, self.goal_y, 5, self.goal_width))
+                         (self.width - 5, self.goal_yright, 5, self.goal_width))
 
     def draw_field_divider(self, screen) -> None:
         """ Desenha o divisor do campo

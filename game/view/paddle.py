@@ -3,7 +3,7 @@ import pygame
 from game.config.constants import *
 
 
-class Paddle:
+class PaddleView:
     def __init__(self, x, y, color) -> None:
         self.x = x
         self.y = y

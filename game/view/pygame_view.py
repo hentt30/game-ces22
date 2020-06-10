@@ -1,7 +1,7 @@
 import pygame
 from game.view.field import Field
-from game.view.puck import Puck
-from game.view.paddle import Paddle
+from game.view.puck import PuckView
+from game.view.paddle import PaddleView
 from game.subscriber.events import *
 from game.config.constants import *
 
@@ -16,11 +16,11 @@ class PyGameView(object):
         self.small_font = None
         self.fps = FPS
         self.field = Field()
-        self.paddle_right = Paddle(PADDLE_RIGHT_X, PADDLE_RIGHT_Y,
+        self.paddle_right = PaddleView(PADDLE_RIGHT_X, PADDLE_RIGHT_Y,
                                    PADDLE_RIGHT_COLOR)
-        self.paddle_left = Paddle(PADDLE_LEFT_X, PADDLE_LEFT_Y,
+        self.paddle_left = PaddleView(PADDLE_LEFT_X, PADDLE_LEFT_Y,
                                   PADDLE_LEFT_COLOR)
-        self.puck = Puck(WIDTH / 2, HEIGHT / 2)
+        self.puck = PuckView(WIDTH / 2, HEIGHT / 2)
 
     def notify(self, event) -> None:
         """ Notifica a tela dos eventos possíveis
