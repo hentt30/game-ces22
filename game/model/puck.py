@@ -75,8 +75,11 @@ class Puck:
                 self.angle = -self.angle
 
     def paddle_collision(self, paddle) -> None:
+<<<<<<< HEAD
+=======
 
         self.speed = PUCK_SPEED
+>>>>>>> 593b4e3ccc6a2436f3b011760d33822a25928b4a
         px = paddle.get_pos()[0]
         py = paddle.get_pos()[1]
         if self.x == px:
