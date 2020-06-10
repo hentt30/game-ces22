@@ -1,11 +1,12 @@
 ####
 import sys
 import pygame
+import string
 import random as rand
 from game.model.puck import Puck
 from game.model.paddle import Paddle
 from game.config.constants import *
-from game.controllers.keyboard import NotifyRoundChange
+from game.controllers.keyboard import NotifyRoundChange, NotifyEndGame
 ####
 class Event(object):
     """Uma classe que descreve os eventos em alto nível
@@ -83,11 +84,9 @@ class ResetGame(Event):
         paddle2.reset(WIDTH - 20, HEIGHT / 2)
 
 
-
 class RoundChange(TickEvent):
     def __init__(self)->None:
-        self.name = "Round Change"
-        
+        self.name = "Round Change"       
         
     def notify_round_change(self, round_no,score1,score2)->None:
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -128,10 +127,36 @@ class RoundChange(TickEvent):
 class EndGame(QuitEvent):
     def __int__(self)->None:
         self.name = "End Game"
+
+    def print_text(self,screen, text, center, font, color):
+        """ Definir posição e formato do texto pro round """
+        text_surf= font.render(text, True, color)
+        text_rect= text_surf.get_rect()
+        text_rect.center = center
+        screen.blit(text_surf, text_rect)
     
     def game_end(self,screen, player):
-        #Terminar de implementar
-        return 1
+        celeb_text = pygame.font.Font(os.path.join(auxDirectory, 'MR ROBOT.ttf'), 140)
+        large_text = pygame.font.Font('freesansbold.ttf', 45)
+        small_text = pygame.font.Font('freesansbold.ttf', 30)
+
+        while True:
+            # to smoothly shine winning message
+            delay = 0
+            screen.fill(BACKGROUND_COLOR)
+            # set flashing colors
+            color_x = rand.randint(0, 4)
+            color_y = rand.randint(0, 1)
+
+            NotifyEndGame.notify(self)
+            # print which player won
+            if delay == 0:
+                self.print_text(screen, "{0} WINS".format(string.upper(player)), (WIDTH / 2, HEIGHT / 2 - 150),
+                    celeb_text, COLORS[color_x][color_y])
+
+            # drawing buttons for reset, menu and exit.
+            #Terminar de implementar aqui!!!! (Chamar outra função)
+
 
 
     def end(self,puck,state,round,placar,speed,option)->None:
