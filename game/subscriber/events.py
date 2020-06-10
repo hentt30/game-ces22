@@ -6,7 +6,6 @@ import random as rand
 from game.model.puck import Puck
 from game.model.paddle import Paddle
 from game.config.constants import *
-from game.controllers.keyboard import NotifyRoundChange, NotifyEndGame
 ####
 class Event(object):
     """Uma classe que descreve os eventos em alto nível
@@ -86,7 +85,17 @@ class ResetGame(Event):
 
 class RoundChange(TickEvent):
     def __init__(self)->None:
-        self.name = "Round Change"       
+        self.name = "Round Change"
+
+    def verify_input(self,event)->None:
+        if(isinstance(event, TickEvent)):
+            for event in pygame.event.get():
+                    if event.type == quit():
+                        sys.exit()
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            return
+
         
     def notify_round_change(self, round_no,score1,score2)->None:
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -95,7 +104,7 @@ class RoundChange(TickEvent):
         clock = pygame.time.Clock()
 
         while True:
-            NotifyRoundChange.notify(self)
+            self.verify_input(self)
             round_text = round_font.render("ROUND {0} COMPLETE".format(round_no), True, COLORS[2][0])
             screen.blit(round_text, [WIDTH / 2 - 150, HEIGHT / 2 - 50])
 
@@ -135,8 +144,7 @@ class EndGame(QuitEvent):
         text_rect.center = center
         screen.blit(text_surf, text_rect)
     
-    def game_end(self,screen, player):
-        celeb_text = pygame.font.Font(os.path.join(auxDirectory, 'MR ROBOT.ttf'), 140)
+    def game_end(self,screen, clock, player):
         large_text = pygame.font.Font('freesansbold.ttf', 45)
         small_text = pygame.font.Font('freesansbold.ttf', 30)
 
@@ -148,14 +156,17 @@ class EndGame(QuitEvent):
             color_x = rand.randint(0, 4)
             color_y = rand.randint(0, 1)
 
-            NotifyEndGame.notify(self)
+            PressButton.get_input(self, TickEvent)
             # print which player won
             if delay == 0:
-                self.print_text(screen, "{0} WINS".format(string.upper(player)), (WIDTH / 2, HEIGHT / 2 - 150),
-                    celeb_text, COLORS[color_x][color_y])
+                self.print_text(screen, "{0} WINS".format(player), (WIDTH / 2, HEIGHT / 2 - 150),
+                    large_text, COLORS[color_x][color_y])
 
             # drawing buttons for reset, menu and exit.
+            return PressButton.draw_buttons(self,screen)
             #Terminar de implementar aqui!!!! (Chamar outra função)
+            pygame.display.update()
+            clock.tick(10)
 
 
 
@@ -176,5 +187,79 @@ class EndGame(QuitEvent):
         # Quit game
         else:
             sys.exit()
+
+class PressButton(InputEvent):
+    """ Pressiona botão e exibe mensagem"""
+    def __init__(self)->None:
+        self.name = "Press Button"
+        self.buttonRadius = 60
+    
+    def get_input(self,event)->None:
+        if (isinstance(event, TickEvent)):
+            for event in pygame.event.get():
+                # Press R to reset game
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+                    return 1
+                # Press M to go to menu
+                elif event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+                    return 2
+                # Press esc or Q to quit
+                elif event.type == pygame.KEYDOWN and (event.key == pygame.K_q or event.key == pygame.K_ESCAPE):
+                    pygame.quit()
+                    sys.exit()
+
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+        
+    def text_obj(self,text, font, color):
+        text_surface = font.render(text, True, color)
+        return text_surface, text_surface.get_rect()
+
+    def button_circle(self,screen, butt_color, button_pos, text, text_size, text_color,text_pos):
+        pygame.draw.circle(screen, butt_color, button_pos, self.buttonRadius)
+        text_surf, text_rect = self.text_obj(text, text_size, text_color)
+        text_rect.center = text_pos
+        screen.blit(text_surf, text_rect)
+
+    def draw_buttons(self, screen)->None:
+        mouse_pos = pygame.mouse.get_pos()
+        mouse_press = pygame.mouse.get_pressed()
+        large_text = pygame.font.Font('freesansbold.ttf', 45)
+        small_text = pygame.font.Font('freesansbold.ttf', 30)
+        
+
+        # Reset button
+        if abs(mouse_pos[0] - 200) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
+            self.button_circle(screen, COLORS[0][0], (200, 470), "Reset", large_text, (255, 255, 255),
+                          (WIDTH / 2 - 400, HEIGHT / 2 + 170))
+            if mouse_press[0] == 1:
+                return 1
+
+        else:
+            self.button_circle(screen, COLORS[0][0], (200, 470), "Reset", small_text, (255, 255, 255),
+                          (WIDTH / 2 - 400, HEIGHT / 2 + 170))
+
+        # Menu button
+        if abs(mouse_pos[0] - 600) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
+            self.button_circle(screen, COLORS[4][1], (600, 470), "Menu", large_text, (255, 255, 255),
+                          (WIDTH / 2, HEIGHT / 2 + 170))
+            if mouse_press[0] == 1:
+                return 2
+
+        else:
+            self.button_circle(screen, COLORS[4][1], (600, 470), "Menu", small_text, (255, 255, 255),
+                          (WIDTH / 2, HEIGHT / 2 + 170))
+
+        # quit button
+        if abs(mouse_pos[0] - 1000) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
+            self.button_circle(screen, COLORS[1][1], (1000, 470), "Quit", large_text, (255, 255, 255),
+                          (WIDTH / 2 + 400, HEIGHT / 2 + 170))
+            if mouse_press[0] == 1:
+                pygame.quit()        
+                return 3
+        else:
+            self.button_circle(screen, COLORS[1][0], (1000, 470), "Quit", small_text, (255, 255, 255),
+                          (WIDTH / 2 + 400, HEIGHT / 2 + 170))
 
 ###########################
