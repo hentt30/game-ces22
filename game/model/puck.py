@@ -83,28 +83,39 @@ class Puck:
                 self.angle = -self.angle
 
     def paddle_collision(self, paddle) -> None:
-
-        self.speed = PUCK_SPEED*(self.radius + paddle.radius)/(dist(self.get_pos(), paddle.get_pos()))
         px = paddle.get_pos()[0]
         py = paddle.get_pos()[1]
-        if self.x == px:
-            self.angle = -self.angle
-        elif self.x > px:
+        if(self.speed == 0):
             betha = atan((self.y - py)/(self.x - px))
             if betha == 0:
-                self.angle = pi - self.angle
+                if self.x < px:
+                    self.angle = pi
+                else:
+                    self.angle = 0
             elif betha > 0:
-                self.angle = -self.angle + 2*betha - pi
+                self.angle = -pi + betha
             else:
-                self.angle = -self.angle + 2*betha + pi
+                self.angle = pi + betha
         else:
-            betha = -atan((self.y - py)/(self.x - px))
-            if betha == 0:
-                self.angle = pi - self.angle
-            elif betha > 0:
-                self.angle = -self.angle - 2*betha + pi
+            if self.x == px:
+                self.angle = -self.angle
+            elif self.x > px:
+                betha = atan((self.y - py)/(self.x - px))
+                if betha == 0:
+                    self.angle = pi - self.angle
+                elif betha > 0:
+                    self.angle = -self.angle + 2*betha - pi
+                else:
+                    self.angle = -self.angle + 2*betha + pi
             else:
-                self.angle = -self.angle - 2*betha - pi
+                betha = -atan((self.y - py)/(self.x - px))
+                if betha == 0:
+                    self.angle = pi - self.angle
+                elif betha > 0:
+                    self.angle = -self.angle - 2*betha + pi
+                else:
+                    self.angle = -self.angle - 2*betha - pi
+        self.speed = PUCK_SPEED*(self.radius + paddle.radius)/(dist(self.get_pos(), paddle.get_pos()))
 
     def update(self, left_paddle, rigth_paddle) -> None:
 
