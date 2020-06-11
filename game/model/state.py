@@ -2,7 +2,7 @@ from game.subscriber.events import *
 from game.model.paddle import Paddle
 from game.model.puck import Puck
 from game.config.constants import *
-from game.view.__init__ import game_view
+#from game.view.__init__ import game_view
 import pygame
 
 class State(object):
@@ -45,7 +45,7 @@ class Placar:
     def get_placar(self)->None:
         """ Define a forma do placar e aciona na tela"""
         small_font = pygame.font.SysFont("comicsans", 35)
-        text1 = small_font.render("{0} : {1}".format("Player 1", str(self.score1)), True, BLACK)
+        text1 = small_font.render("{0} : {1}".format("Player 1",str(self.score1)), True, BLACK)
         text2 = small_font.render("{0} : {1}".format("Player 2", str(self.score2)), True, BLACK)
 
         self.screen.blit(text1, [40, 0])
@@ -53,16 +53,17 @@ class Placar:
 
     def update_placar(self, speed,state)->None:
         """ Verifica o retorno de check_goal e atualiza o placar"""
-        # Hits the left goal!
-        if Goal.check_goal(self,LEFT,state.puck):
-            self.score2 += 1
-            ResetGame.reset_conditions(self,state.puck,state.paddle_left,
-            state.paddle_right,speed, 1,1)
-        # Hits the left goal!
-        if Goal.check_goal(self,RIGHT,state.puck):
-            self.score1 += 1
-            ResetGame.reset_conditions(self,state.puck,state.paddle_left,
-            state.paddle_right,speed, 2,1)
+        if state is not None:
+            # Hits the left goal!
+            if Goal.check_goal(self,LEFT,state.puck):
+                self.score2 += 1
+                ResetGame.reset_conditions(self,state.puck,state.paddle_left,
+                state.paddle_right,speed, 1,1)
+            # Hits the left goal!
+            if Goal.check_goal(self,RIGHT,state.puck):
+                self.score1 += 1
+                ResetGame.reset_conditions(self,state.puck,state.paddle_left,
+                state.paddle_right,speed, 2,1)
 
 
 class Round:
@@ -82,27 +83,28 @@ class Round:
 
     def update_round(self,speed,state)->None:
         """ Verifica as condições necessárias e atualiza o round do jogo"""
-        if state.placar.score1 == SCORE_LIMIT:
-            if not self.round_p1 + 1 == ROUND_LIMIT:
-                RoundChange.notify_round_change(self, self.round_no, state.placar.score1, state.placar.score2)
-            self.round_no += 1
-            self.round_p1 += 1
-            state.placar.score1, state.placar.score2 = 0, 0
-            ResetGame.reset_conditions(self,state.puck,state.paddle_left,state.paddle_right,0,1,2)
+        if state is not None:
+            if state.placar.score1 == SCORE_LIMIT:
+                if not self.round_p1 + 1 == ROUND_LIMIT:
+                    RoundChange.notify_round_change(self, self.round_no, state.placar.score1, state.placar.score2)
+                self.round_no += 1
+                self.round_p1 += 1
+                state.placar.score1, state.placar.score2 = 0, 0
+                ResetGame.reset_conditions(self,state.puck,state.paddle_left,state.paddle_right,0,1,2)
 
-        if state.placar.score2 == SCORE_LIMIT:
-            if not self.round_p2 + 1 == ROUND_LIMIT:
-                RoundChange.notify_round_change(self, self.round_no, state.placar.score1,state.placar.score2)
-            self.round_no += 1
-            self.round_p2 += 1
-            state.placar.score1, state.placar.score2 = 0, 0
-            ResetGame.reset_conditions(self,state.puck,state.paddle_left,
-            state.paddle_right,0,2,2)
+            if state.placar.score2 == SCORE_LIMIT:
+                if not self.round_p2 + 1 == ROUND_LIMIT:
+                    RoundChange.notify_round_change(self, self.round_no, state.placar.score1,state.placar.score2)
+                self.round_no += 1
+                self.round_p2 += 1
+                state.placar.score1, state.placar.score2 = 0, 0
+                ResetGame.reset_conditions(self,state.puck,state.paddle_left,
+                state.paddle_right,0,2,2)
 
-        if self.round_p1 == ROUND_LIMIT:  # Player one denotes left player
-            self.get_winner(1,state.puck,self.screen,speed)
-        if self.round_p2 == ROUND_LIMIT:  # Player two denotes right player
-            self.get_winner(2,state.puck,self.screen,speed)
+            if self.round_p1 == ROUND_LIMIT:  # Player one denotes left player
+                self.get_winner(1,state.puck,self.screen,speed)
+            if self.round_p2 == ROUND_LIMIT:  # Player two denotes right player
+                self.get_winner(2,state.puck,self.screen,speed)
 
     def  get_winner(self,player,puck,screen,speed)->None:
         """ Define o vencedor """

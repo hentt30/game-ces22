@@ -44,7 +44,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BACKGROUND_COLOR = (0, 255, 0)
 # Scoring
-SCORE_LIMIT = 5
+#SCORE_LIMIT = 5
+SCORE_LIMIT = 3
 ROUND_LIMIT = 2
 
 # Environment
@@ -68,6 +69,8 @@ RIGHT = 1
 PADDLE_RIGHT = "paddle_right"
 PADDLE_LEFT = "paddle_left"
 PUCK = "puck"
+PLACAR = "placar"
+ROUND= "round"
 
 # vetor de cores
 COLORS = [[(46, 120, 50), (66, 152, 60)], [(200, 72, 72), (255, 92, 92)],
