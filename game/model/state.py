@@ -67,12 +67,12 @@ class Placar:
             if Goal.check_goal(self,LEFT,state.puck):
                 self.score2 += 1
                 ResetGame.reset_conditions(self,state.puck,state.paddle_left,
-                state.paddle_right,speed, 1,1)
+                state.paddle_right,speed, 2,2)
             # Hits the left goal!
             if Goal.check_goal(self,RIGHT,state.puck):
                 self.score1 += 1
                 ResetGame.reset_conditions(self,state.puck,state.paddle_left,
-                state.paddle_right,speed, 2,1)
+                state.paddle_right,speed, 1,2)
 
 
 class Round:
@@ -107,7 +107,7 @@ class Round:
                 self.round_no += 1
                 self.round_p1 += 1
                 state.placar.score1, state.placar.score2 = 0, 0
-                ResetGame.reset_conditions(self,state.puck,state.paddle_left,state.paddle_right,0,1,2)
+                ResetGame.reset_conditions(self,state.puck,state.paddle_left,state.paddle_right,0,1,1)
 
             if state.placar.score2 == SCORE_LIMIT:
                 if not self.round_p2 + 1 == ROUND_LIMIT:
@@ -116,7 +116,7 @@ class Round:
                 self.round_p2 += 1
                 state.placar.score1, state.placar.score2 = 0, 0
                 ResetGame.reset_conditions(self,state.puck,state.paddle_left,
-                state.paddle_right,0,2,2)
+                state.paddle_right,0,2,1)
 
             if self.round_p1 == ROUND_LIMIT:  # Player one denotes left player
                 self.get_winner(1,state.puck,self.screen,speed)
@@ -125,7 +125,8 @@ class Round:
 
     def  get_winner(self,player,puck,screen,speed)->None:
         """ Define o vencedor """
-        if EndGame.end(self,puck, State, Round, Placar, speed, EndGame.game_end(self,screen,player)):
+        state = EndGame()
+        if EndGame.end(self,puck, State, Round, Placar, speed, state.game_end(screen,player)):
             #Modifica musica aqui
             return
         else:
