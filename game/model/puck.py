@@ -14,7 +14,7 @@ class Puck:
         self.time_delta = TIME_DELTA
         self.field_height = HEIGHT
         self.field_width = WIDTH
-        self.angle = pi/2
+        self.angle = 0
         self.crazy_mode = crazy_mode
 
     def set_position(self, position) -> None:
@@ -45,8 +45,8 @@ class Puck:
     def check_paddle(self, paddle) -> None:
 
         if dist(self.get_pos(), paddle.get_pos()) <= (self.radius + paddle.radius):
-            self.correct_position(paddle)
             self.paddle_collision(paddle)
+            self.correct_position(paddle)
 
     def correct_position(self, paddle) -> None:
 
@@ -84,7 +84,7 @@ class Puck:
 
     def paddle_collision(self, paddle) -> None:
 
-        self.speed = PUCK_SPEED
+        self.speed = PUCK_SPEED*(self.radius + paddle.radius)/(dist(self.get_pos(), paddle.get_pos()))
         px = paddle.get_pos()[0]
         py = paddle.get_pos()[1]
         if self.x == px:
@@ -94,7 +94,7 @@ class Puck:
             if betha == 0:
                 self.angle = pi - self.angle
             elif betha > 0:
-                self.angle = -self.angle - 2*betha + pi
+                self.angle = -self.angle + 2*betha - pi
             else:
                 self.angle = -self.angle + 2*betha + pi
         else:
@@ -104,7 +104,7 @@ class Puck:
             elif betha > 0:
                 self.angle = -self.angle - 2*betha + pi
             else:
-                self.angle = -self.angle + 2*betha + pi
+                self.angle = -self.angle - 2*betha - pi
 
     def update(self, left_paddle, rigth_paddle) -> None:
 

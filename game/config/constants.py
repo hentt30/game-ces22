@@ -27,7 +27,7 @@ PUCK_SPEED = 650
 
 # Tolerance for collision
 
-EPSILON = PUCK_SIZE/3
+EPSILON = PADDLE_SIZE/4
 
 # Goal Position
 GOAL_WIDTH = 180
