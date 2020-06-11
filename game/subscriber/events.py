@@ -87,16 +87,7 @@ class RoundChange(TickEvent):
     def __init__(self)->None:
         self.name = "Round Change"
 
-    def verify_input(self,event):
-        if(isinstance(event, TickEvent)):
-            for event in pygame.event.get():
-                    if event.type == quit():
-                        sys.exit()
-                    elif event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_SPACE:
-                            return
-
-        
+       
     def notify_round_change(self, round_no,score1,score2):
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
         small_font = pygame.font.SysFont("comicsans", 35)
@@ -104,8 +95,12 @@ class RoundChange(TickEvent):
         clock = pygame.time.Clock()
 
         while True:
-            #self.verify_input(self)
-            RoundChange.verify_input(self,RoundChange)
+            for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_SPACE:
+                            return
             round_text = round_font.render("ROUND {0} COMPLETE".format(round_no), True, COLORS[2][0])
             screen.blit(round_text, [WIDTH / 2 - 150, HEIGHT / 2 - 50])
 

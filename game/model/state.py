@@ -84,7 +84,7 @@ class Round:
 
  
     def render_round(self):
-        """ Define o round do jogo """
+        """ Imprime  o round do jogo """
         round_font = pygame.font.SysFont("comicsans", 45)
         EndGame.print_text(self, self.screen, "Round "+str(self.round_no), (WIDTH/2, 20), round_font, BLACK)
         EndGame.print_text(self ,self.screen, str(self.round_p1) + " : " + str(self.round_p2), (WIDTH / 2, 50), round_font, BLACK)
@@ -128,7 +128,7 @@ class Round:
             #Modifica musica aqui
             return
         else:
-            self.get_round()
+            self.render_round()
 
 
 ###################
