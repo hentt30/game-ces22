@@ -50,6 +50,7 @@ class Placar:
 
         self.screen.blit(text1, [40, 0])
         self.screen.blit(text2, [WIDTH - 150, 0])
+        pygame.display.flip()
 
     def update_placar(self, speed,state)->None:
         """ Verifica o retorno de check_goal e atualiza o placar"""
