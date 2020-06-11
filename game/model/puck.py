@@ -44,8 +44,16 @@ class Puck:
 
     def check_paddle(self, paddle) -> None:
 
-        if dist(self.get_pos(), paddle.get_pos()) <= self.radius + paddle.radius:
+        if dist(self.get_pos(), paddle.get_pos()) <= (self.radius + paddle.radius):
+            self.correct_position(paddle)
             self.paddle_collision(paddle)
+
+    def correct_position(self, paddle) -> None:
+
+        position = [0, 0]
+        position[0] = paddle.get_pos()[0] + (self.get_pos()[0]-paddle.get_pos()[0])*(self.radius + paddle.radius + EPSILON)/dist(self.get_pos(), paddle.get_pos())
+        position[1] = paddle.get_pos()[1] + (self.get_pos()[1]-paddle.get_pos()[1])*(self.radius + paddle.radius + EPSILON)/dist(self.get_pos(), paddle.get_pos())
+        self.set_position(position)
 
     def move(self) -> None:
 
@@ -75,7 +83,8 @@ class Puck:
                 self.angle = -self.angle
 
     def paddle_collision(self, paddle) -> None:
-        self.speed=PUCK_SPEED
+
+        self.speed = PUCK_SPEED
         px = paddle.get_pos()[0]
         py = paddle.get_pos()[1]
         if self.x == px:

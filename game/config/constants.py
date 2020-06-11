@@ -23,7 +23,11 @@ PADDLE_RIGHT_COLOR = (150, 150, 0)
 
 # Puck
 PUCK_SIZE = 30
-PUCK_SPEED = 450
+PUCK_SPEED = 650
+
+# Tolerance for collision
+
+EPSILON = PUCK_SIZE/3
 
 # Goal Position
 GOAL_WIDTH = 180
