@@ -22,8 +22,8 @@ class PyGameView(object):
         self.paddle_left = PaddleView(PADDLE_LEFT_X, PADDLE_LEFT_Y,
                                   PADDLE_LEFT_COLOR)
         self.puck = PuckView(WIDTH / 2, HEIGHT / 2)
-        self.placar= Placar(event_manager)
-        self.round= Round(event_manager)
+        self.placar= Placar(event_manager,0,0)
+        self.round= Round(event_manager,1,0,0)
 
     def notify(self, event) -> None:
         """ Notifica a tela dos eventos possíveis
@@ -51,8 +51,8 @@ class PyGameView(object):
         self.paddle_right.render(self.screen)
         self.paddle_left.render(self.screen)
         self.puck.render(self.screen)
-        self.placar.get_placar()
-        self.round.get_round()
+        self.placar.render_placar()
+        self.round.render_round()
         pygame.display.flip()
 
     def update(self, new_state) -> None:
@@ -61,8 +61,10 @@ class PyGameView(object):
         self.paddle_right.update(new_state[PADDLE_RIGHT])
         self.paddle_left.update(new_state[PADDLE_LEFT])
         self.puck.update(new_state[PUCK])
-        self.placar.update_placar(0,new_state[PLACAR])
-        self.round.update_round(0,new_state[ROUND])
+        self.placar.render_update_placar(new_state[PLACAR])
+        self.round.render_update_round(new_state[ROUND])
+        #self.placar.update_placar(0,state)
+        #self.round.update_round(0,state)
 
     def initialize(self) -> None:
         """Inicializa o jogo

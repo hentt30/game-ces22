@@ -13,8 +13,8 @@ paddle_right = Paddle(PADDLE_RIGHT_X, PADDLE_RIGHT_Y,1)
 
 game_engine= GameEngine(event_manager)
 state= State(event_manager)
-placar = Placar(event_manager)
-round= Round(event_manager)
+#placar = Placar(event_manager)
+#round= Round(event_manager)
 
 
 

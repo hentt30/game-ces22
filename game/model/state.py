@@ -5,14 +5,15 @@ from game.config.constants import *
 #from game.view.__init__ import game_view
 import pygame
 
+global score1, score2
 class State(object):
     def __init__(self, event_manager) -> None:
         self.event_manager = event_manager
         self.paddle_right = Paddle(PADDLE_RIGHT_X, PADDLE_RIGHT_Y, RIGHT)
         self.paddle_left = Paddle(PADDLE_LEFT_X, PADDLE_LEFT_Y, LEFT)
         self.puck = Puck()
-        self.placar= Placar(event_manager)
-        self.round= Round(event_manager)
+        self.placar= Placar(event_manager,0,0)
+        self.round= Round(event_manager,1,0,0)
 
     def get_state(self) -> None:
         state = {
@@ -36,20 +37,27 @@ class State(object):
 
 #####################
 class Placar:
-    def __init__(self, event_manager) ->None:
+    def __init__(self, event_manager, score1,score2) ->None:
         self.event_manager = event_manager
-        self.score1=0
-        self.score2=0
+        self.score1=score1
+        self.score2=score2
         self.screen= pygame.display.set_mode((WIDTH, HEIGHT))
 
-    def get_placar(self)->None:
+    def render_placar(self)->None:
         """ Define a forma do placar e aciona na tela"""
         small_font = pygame.font.SysFont("comicsans", 35)
         text1 = small_font.render("{0} : {1}".format("Player 1",str(self.score1)), True, BLACK)
         text2 = small_font.render("{0} : {1}".format("Player 2", str(self.score2)), True, BLACK)
-
+    
         self.screen.blit(text1, [40, 0])
         self.screen.blit(text2, [WIDTH - 150, 0])
+
+    def get_placar(self):   
+        return self.score1, self.score2
+
+    def render_update_placar(self,scores):
+        self.score1= scores[0]
+        self.score2= scores[1]
 
     def update_placar(self, speed,state)->None:
         """ Verifica o retorno de check_goal e atualiza o placar"""
@@ -67,20 +75,28 @@ class Placar:
 
 
 class Round:
-    def __init__(self,event_manager)->None:
+    def __init__(self,event_manager, round_no,round_p1, round_p2)->None:
         self.event_manager=event_manager
-        self.round_no=1
-        self.round_p1=0
-        self.round_p2=0
+        self.round_no= round_no
+        self.round_p1= round_p1
+        self.round_p2= round_p2
         self.screen= pygame.display.set_mode((WIDTH, HEIGHT))
 
  
-    def get_round(self):
+    def render_round(self):
         """ Define o round do jogo """
         round_font = pygame.font.SysFont("comicsans", 45)
         EndGame.print_text(self, self.screen, "Round "+str(self.round_no), (WIDTH/2, 20), round_font, BLACK)
         EndGame.print_text(self ,self.screen, str(self.round_p1) + " : " + str(self.round_p2), (WIDTH / 2, 50), round_font, BLACK)
 
+    def get_round(self):
+        return self.round_no, self.round_p1, self.round_p2
+
+    def render_update_round(self,rounds):
+        self.round_no= rounds[0]
+        self.round_p1= rounds[1]
+        self.round_p2= rounds[2]
+    
     def update_round(self,speed,state)->None:
         """ Verifica as condições necessárias e atualiza o round do jogo"""
         if state is not None:
@@ -94,7 +110,7 @@ class Round:
 
             if state.placar.score2 == SCORE_LIMIT:
                 if not self.round_p2 + 1 == ROUND_LIMIT:
-                    RoundChange.notify_round_change(self, self.round_no, state.placar.score1,state.placar.score2)
+                    RoundChange.notify_round_change(self,self.round_no, state.placar.score1,state.placar.score2)
                 self.round_no += 1
                 self.round_p2 += 1
                 state.placar.score1, state.placar.score2 = 0, 0

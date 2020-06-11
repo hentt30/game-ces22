@@ -1,12 +1,10 @@
 import pygame
 from game.subscriber.events import *
 
-
 class Keyboard(object):
     """ Trata dos inputs do teclado
     """
     def __init__(self, event_manager) -> None:
-
         self.event_manager = event_manager
         self.event_manager.subscribe_listener(self)
 

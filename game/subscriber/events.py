@@ -87,7 +87,7 @@ class RoundChange(TickEvent):
     def __init__(self)->None:
         self.name = "Round Change"
 
-    def verify_input(self,event)->None:
+    def verify_input(self,event):
         if(isinstance(event, TickEvent)):
             for event in pygame.event.get():
                     if event.type == quit():
@@ -97,14 +97,15 @@ class RoundChange(TickEvent):
                             return
 
         
-    def notify_round_change(self, round_no,score1,score2)->None:
+    def notify_round_change(self, round_no,score1,score2):
         screen = pygame.display.set_mode((WIDTH, HEIGHT))
         small_font = pygame.font.SysFont("comicsans", 35)
         round_font = pygame.font.SysFont("comicsans", 45)
         clock = pygame.time.Clock()
 
         while True:
-            self.verify_input(self)
+            #self.verify_input(self)
+            RoundChange.verify_input(self,RoundChange)
             round_text = round_font.render("ROUND {0} COMPLETE".format(round_no), True, COLORS[2][0])
             screen.blit(round_text, [WIDTH / 2 - 150, HEIGHT / 2 - 50])
 
@@ -171,7 +172,7 @@ class EndGame(QuitEvent):
 
 
 
-    def end(self,puck,state,round,placar,speed,option)->None:
+    def end(self,puck,state,round,placar,speed,option):
         # reset game with everything else same
         if option == 1:
             ResetGame.reset_conditions(self,puck,placar.paddle_left,placar.paddle_right,speed,1,1)
@@ -195,7 +196,7 @@ class PressButton(InputEvent):
         self.name = "Press Button"
         self.buttonRadius = 60
     
-    def get_input(self,event)->None:
+    def get_input(self,event):
         if (isinstance(event, TickEvent)):
             for event in pygame.event.get():
                 # Press R to reset game
@@ -223,7 +224,7 @@ class PressButton(InputEvent):
         text_rect.center = text_pos
         screen.blit(text_surf, text_rect)
 
-    def draw_buttons(self, screen)->None:
+    def draw_buttons(self, screen):
         mouse_pos = pygame.mouse.get_pos()
         mouse_press = pygame.mouse.get_pressed()
         large_text = pygame.font.Font('freesansbold.ttf', 45)
