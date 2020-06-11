@@ -61,6 +61,9 @@ PAUSE_BUTTON_RADIUS = 32
 # info button
 INFO_BUTTON_RADIUS = 32
 
+# Raio do botão de quit
+buttonRadius = 60
+
 # sides
 LEFT = 0
 RIGHT = 1

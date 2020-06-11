@@ -119,13 +119,13 @@ class Round:
                 state.paddle_right,0,2,2)
 
             if self.round_p1 == ROUND_LIMIT:  # Player one denotes left player
-                self.get_winner(1,state.puck,self.screen,speed)
+                self.get_winner(1,state,self.screen,speed)
             if self.round_p2 == ROUND_LIMIT:  # Player two denotes right player
-                self.get_winner(2,state.puck,self.screen,speed)
+                self.get_winner(2,state,self.screen,speed)
 
-    def  get_winner(self,player,puck,screen,speed)->None:
+    def  get_winner(self,player,state,screen,speed)->None:
         """ Define o vencedor """
-        if EndGame.end(self,puck, State, Round, Placar, speed, EndGame.game_end(self,screen,player)):
+        if EndGame.end(self,state.puck, state, state.round,state.placar, speed, EndGame.game_end(self,screen,player)):
             #Modifica musica aqui
             return
         else:
