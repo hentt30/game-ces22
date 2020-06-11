@@ -63,8 +63,6 @@ class PyGameView(object):
         self.puck.update(new_state[PUCK])
         self.placar.render_update_placar(new_state[PLACAR])
         self.round.render_update_round(new_state[ROUND])
-        #self.placar.update_placar(0,state)
-        #self.round.update_round(0,state)
 
     def initialize(self) -> None:
         """Inicializa o jogo
