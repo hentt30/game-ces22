@@ -153,7 +153,8 @@ class EndGame(QuitEvent):
             color_x = rand.randint(0, 4)
             color_y = rand.randint(0, 1)
 
-            PressButton.get_input(self, TickEvent)
+            event = PressButton()
+            event.get_input(TickEvent())
             # print which player won
             if delay == 0:
                 self.print_text(screen, "PLAYER {} WINS".format(player), (WIDTH / 2, HEIGHT / 2 - 150),
@@ -161,26 +162,26 @@ class EndGame(QuitEvent):
 
             # drawing buttons for reset, menu and exit.
             event = PressButton()
-            event.draw_buttons(screen)
-            
+            aux = event.draw_buttons(screen)
+
+            if aux == 1 or aux == 2:
+                return aux
+
             pygame.display.update()
             clock.tick(10)
 
 
 
-    def end(self,puck,state,round,placar,speed,option):
+    def end(self,state,speed,option):
         # reset game with everything else same
         if option == 1:
-            ResetGame.reset_conditions(self,puck,placar.paddle_left,placar.paddle_right,speed,1,1)
-            ResetGame.reset_conditions(self,puck,placar.paddle_left,placar.paddle_right,speed,2,1)
-            placar.score1, placar.score2 = 0, 0
-            round.round_p1, round.round_p2 = 0, 0
-            round.round_no = 1
+            event= ResetGame()
+            event.reset_conditions(state.puck,state.paddle_left,state.paddle_right,speed,1,1)
+            event.reset_conditions(state.puck,state.paddle_left,state.paddle_right,speed,2,1)
+            state.placar.score1, state.placar.score2 = 0, 0
+            state.round.round_p1, state.round.round_p2 = 0, 0
+            state.round.round_no = 1
             return False  # Tells that game should continue with reset
-
-        # goes to menu
-        elif option == 2:
-            return True  # Game should restart at Start Screen
 
         # Quit game
         else:
@@ -237,24 +238,15 @@ class PressButton(InputEvent):
             self.button_circle(screen, COLORS[0][0], (200, 470), "Reset", small_text, (255, 255, 255),
                           (WIDTH / 2 - 400, HEIGHT / 2 + 170))
 
-        # Menu button
-        if abs(mouse_pos[0] - 600) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
-            self.button_circle(screen, COLORS[4][1], (600, 470), "Menu", large_text, (255, 255, 255),
-                          (WIDTH / 2, HEIGHT / 2 + 170))
-            if mouse_press[0] == 1:
-                return 2
-
-        else:
-            self.button_circle(screen, COLORS[4][1], (600, 470), "Menu", small_text, (255, 255, 255),
-                          (WIDTH / 2, HEIGHT / 2 + 170))
 
         # quit button
         if abs(mouse_pos[0] - 1000) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
             self.button_circle(screen, COLORS[1][1], (1000, 470), "Quit", large_text, (255, 255, 255),
                           (WIDTH / 2 + 400, HEIGHT / 2 + 170))
             if mouse_press[0] == 1:
+                return 2
                 pygame.quit()        
-                return 3
+                
         else:
             self.button_circle(screen, COLORS[1][0], (1000, 470), "Quit", small_text, (255, 255, 255),
                           (WIDTH / 2 + 400, HEIGHT / 2 + 170))
