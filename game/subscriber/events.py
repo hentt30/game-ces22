@@ -153,7 +153,8 @@ class EndGame(QuitEvent):
             color_x = rand.randint(0, 4)
             color_y = rand.randint(0, 1)
 
-            PressButton.get_input(self, TickEvent)
+            event = PressButton()
+            event.get_input(TickEvent())
             # print which player won
             if delay == 0:
                 self.print_text(screen, "PLAYER {} WINS".format(player), (WIDTH / 2, HEIGHT / 2 - 150),
@@ -161,21 +162,25 @@ class EndGame(QuitEvent):
 
             # drawing buttons for reset, menu and exit.
             event = PressButton()
-            event.draw_buttons(screen)
+            aux = event.draw_buttons(screen)
             
+            if aux == 1 or aux == 3:
+                return aux
+
             pygame.display.update()
             clock.tick(10)
 
 
 
-    def end(self,puck,state,round,placar,speed,option):
+    def end(self,state,speed,option):
         # reset game with everything else same
         if option == 1:
-            ResetGame.reset_conditions(self,puck,placar.paddle_left,placar.paddle_right,speed,1,1)
-            ResetGame.reset_conditions(self,puck,placar.paddle_left,placar.paddle_right,speed,2,1)
-            placar.score1, placar.score2 = 0, 0
-            round.round_p1, round.round_p2 = 0, 0
-            round.round_no = 1
+            event = ResetGame()
+            event.reset_conditions(state.puck,state.paddle_left,state.paddle_right,speed,1,1)
+            event.reset_conditions(state.puck,state.paddle_left,state.paddle_right,speed,2,1)
+            state.placar.score1, state.placar.score2 = 0, 0
+            state.round_p1, state.round_p2 = 0, 0
+            state.round_no = 1
             return False  # Tells that game should continue with reset
 
         # goes to menu
