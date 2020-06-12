@@ -16,7 +16,6 @@ class Paddle:
         self.angle = 0
 
     def check_vertical_bounds(self) -> None:
-        # top
         if (self.y - self.radius <= 0):
             self.y = self.radius
         elif (self.y + self.radius > self.field_height):
@@ -69,9 +68,6 @@ class Paddle:
         self.check_left_boundary()
         self.check_right_boundary()
 
-    ###
     def reset(self, first_x, first_y):
         self.x = first_x
         self.y = first_y
-    ###
-

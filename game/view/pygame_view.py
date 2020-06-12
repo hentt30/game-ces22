@@ -2,9 +2,11 @@ import pygame
 from game.view.field import Field
 from game.view.puck import PuckView
 from game.view.paddle import PaddleView
+from game.view.scoreboard import ScoreboardView
+from game.view.round import RoundView
 from game.subscriber.events import *
 from game.config.constants import *
-from game.model.state import Placar, Round
+
 
 
 class PyGameView(object):
@@ -22,8 +24,8 @@ class PyGameView(object):
         self.paddle_left = PaddleView(PADDLE_LEFT_X, PADDLE_LEFT_Y,
                                   PADDLE_LEFT_COLOR)
         self.puck = PuckView(WIDTH / 2, HEIGHT / 2)
-        self.placar= Placar(event_manager,0,0)
-        self.round= Round(event_manager,1,0,0)
+        self.placar = ScoreboardView()
+        self.round = RoundView()
 
     def notify(self, event) -> None:
         """ Notifica a tela dos eventos possíveis
@@ -51,8 +53,8 @@ class PyGameView(object):
         self.paddle_right.render(self.screen)
         self.paddle_left.render(self.screen)
         self.puck.render(self.screen)
-        self.placar.render_placar()
-        self.round.render_round()
+        self.placar.render(self.screen)
+        self.round.render(self.screen)
         pygame.display.flip()
 
     def update(self, new_state) -> None:
@@ -61,8 +63,8 @@ class PyGameView(object):
         self.paddle_right.update(new_state[PADDLE_RIGHT])
         self.paddle_left.update(new_state[PADDLE_LEFT])
         self.puck.update(new_state[PUCK])
-        self.placar.render_update_placar(new_state[PLACAR])
-        self.round.render_update_round(new_state[ROUND])
+        self.placar.update(new_state[PLACAR])
+        self.round.update(new_state[ROUND])
 
     def initialize(self) -> None:
         """Inicializa o jogo

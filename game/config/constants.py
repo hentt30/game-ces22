@@ -23,8 +23,11 @@ PADDLE_RIGHT_COLOR = (220, 220, 0)
 
 # Puck
 PUCK_SIZE = 30
-PUCK_SPEED = 650
+PUCK_SPEED = 700
 PUCK_COLOR = (150, 0, 0)
+
+# ScoreBoard
+SCOREBOARD_COLOR = (0, 0, 0)
 
 # Tolerance for collision
 
@@ -36,17 +39,17 @@ GOAL_Y_LEFT = HEIGHT / 2 - GOAL_WIDTH / 2
 GOAL_Y_RIGHT = HEIGHT / 2 + GOAL_WIDTH / 2
 
 # Speed levels
-EASY = 450
-MEDIUM = 650
-HARD = 850
+EASY = 500
+MEDIUM = 700
+HARD = 900
 
 # color
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BACKGROUND_COLOR = (0, 120, 0)
+
 # Scoring
-#SCORE_LIMIT = 5
-SCORE_LIMIT = 1
+SCORE_LIMIT = 3
 ROUND_LIMIT = 2
 
 # Environment
