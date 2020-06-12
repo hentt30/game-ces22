@@ -146,10 +146,6 @@ class EndGame(QuitEvent):
         clock = pygame.time.Clock()
 
         while True:
-<<<<<<< Updated upstream
-=======
-            print("entrou aqui")
->>>>>>> Stashed changes
             # to smoothly shine winning message
             delay = 0
             screen.fill(BACKGROUND_COLOR)
@@ -157,22 +153,15 @@ class EndGame(QuitEvent):
             color_x = rand.randint(0, 4)
             color_y = rand.randint(0, 1)
 
-<<<<<<< Updated upstream
-            PressButton.get_input(EndGame, TickEvent)
-            # print which player won
-            if delay == 0:
-                EndGame.print_text(self,screen, "{0} WINS".format(player), (WIDTH / 2, HEIGHT / 2 - 150),
-=======
             PressButton.get_input(self, TickEvent)
             # print which player won
             if delay == 0:
-                self.print_text(screen, "{0} WINS".format(player), (WIDTH / 2, HEIGHT / 2 - 150),
->>>>>>> Stashed changes
+                self.print_text(screen, "PLAYER {} WINS".format(player), (WIDTH / 2, HEIGHT / 2 - 150),
                     large_text, COLORS[color_x][color_y])
 
             # drawing buttons for reset, menu and exit.
-            state = PressButton()
-            return state.draw_buttons(screen)
+            event = PressButton()
+            event.draw_buttons(screen)
             
             pygame.display.update()
             clock.tick(10)
@@ -201,10 +190,7 @@ class PressButton(InputEvent):
     """ Pressiona botão e exibe mensagem"""
     def __init__(self)->None:
         self.name = "Press Button"
-<<<<<<< Updated upstream
-=======
         self.buttonRadius = 60
->>>>>>> Stashed changes
     
     def get_input(self,event):
         if (isinstance(event, TickEvent)):
@@ -229,13 +215,8 @@ class PressButton(InputEvent):
         return text_surface, text_surface.get_rect()
 
     def button_circle(self,screen, butt_color, button_pos, text, text_size, text_color,text_pos):
-<<<<<<< Updated upstream
-        pygame.draw.circle(screen, butt_color, button_pos, buttonRadius)
-        text_surf, text_rect = PressButton.text_obj(self,text, text_size, text_color)
-=======
         pygame.draw.circle(screen, butt_color, button_pos, self.buttonRadius)
         text_surf, text_rect = self.text_obj(text, text_size, text_color)
->>>>>>> Stashed changes
         text_rect.center = text_pos
         screen.blit(text_surf, text_rect)
 
@@ -244,66 +225,38 @@ class PressButton(InputEvent):
         mouse_press = pygame.mouse.get_pressed()
         large_text = pygame.font.Font('freesansbold.ttf', 45)
         small_text = pygame.font.Font('freesansbold.ttf', 30)
-        
 
         # Reset button
-<<<<<<< Updated upstream
-        if abs(mouse_pos[0] - 200) < buttonRadius and abs(mouse_pos[1] - 470) < buttonRadius:
-            PressButton.button_circle(self,screen, COLORS[0][0], (200, 470), "Reset", large_text, (255, 255, 255),
-=======
         if abs(mouse_pos[0] - 200) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
             self.button_circle(screen, COLORS[0][0], (200, 470), "Reset", large_text, (255, 255, 255),
->>>>>>> Stashed changes
                           (WIDTH / 2 - 400, HEIGHT / 2 + 170))
             if mouse_press[0] == 1:
                 return 1
 
         else:
-<<<<<<< Updated upstream
-            PressButton.button_circle(self,screen, COLORS[0][0], (200, 470), "Reset", small_text, (255, 255, 255),
-                          (WIDTH / 2 - 400, HEIGHT / 2 + 170))
-
-        # Menu button
-        if abs(mouse_pos[0] - 600) < buttonRadius and abs(mouse_pos[1] - 470) < buttonRadius:
-            PressButton.button_circle(self,screen, COLORS[4][1], (600, 470), "Menu", large_text, (255, 255, 255),
-=======
             self.button_circle(screen, COLORS[0][0], (200, 470), "Reset", small_text, (255, 255, 255),
                           (WIDTH / 2 - 400, HEIGHT / 2 + 170))
 
         # Menu button
         if abs(mouse_pos[0] - 600) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
             self.button_circle(screen, COLORS[4][1], (600, 470), "Menu", large_text, (255, 255, 255),
->>>>>>> Stashed changes
                           (WIDTH / 2, HEIGHT / 2 + 170))
             if mouse_press[0] == 1:
                 return 2
 
         else:
-<<<<<<< Updated upstream
-            PressButton.button_circle(self,screen, COLORS[4][1], (600, 470), "Menu", small_text, (255, 255, 255),
-                          (WIDTH / 2, HEIGHT / 2 + 170))
-
-        # quit button
-        if abs(mouse_pos[0] - 1000) < buttonRadius and abs(mouse_pos[1] - 470) < buttonRadius:
-            PressButton.button_circle(self,screen, COLORS[1][1], (1000, 470), "Quit", large_text, (255, 255, 255),
-=======
             self.button_circle(screen, COLORS[4][1], (600, 470), "Menu", small_text, (255, 255, 255),
                           (WIDTH / 2, HEIGHT / 2 + 170))
 
         # quit button
         if abs(mouse_pos[0] - 1000) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
             self.button_circle(screen, COLORS[1][1], (1000, 470), "Quit", large_text, (255, 255, 255),
->>>>>>> Stashed changes
                           (WIDTH / 2 + 400, HEIGHT / 2 + 170))
             if mouse_press[0] == 1:
                 pygame.quit()        
                 return 3
         else:
-<<<<<<< Updated upstream
-            PressButton.button_circle(self,screen, COLORS[1][0], (1000, 470), "Quit", small_text, (255, 255, 255),
-=======
             self.button_circle(screen, COLORS[1][0], (1000, 470), "Quit", small_text, (255, 255, 255),
->>>>>>> Stashed changes
                           (WIDTH / 2 + 400, HEIGHT / 2 + 170))
 
 ###########################
