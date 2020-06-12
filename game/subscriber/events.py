@@ -219,7 +219,7 @@ class PressButton(InputEvent):
 
         # Reset button
         if abs(mouse_pos[0] - 200) < self.buttonRadius and abs(mouse_pos[1] - 470) < self.buttonRadius:
-            self.button_circle(screen, COLORS[0][0], (200, 470), "Reset", large_text, (255, 255, 255),
+            self.button_circle(screen, COLORS[0][1], (200, 470), "Reset", large_text, (255, 255, 255),
                           (WIDTH / 2 - 400, HEIGHT / 2 + 170))
             if mouse_press[0] == 1:
                 return 1
