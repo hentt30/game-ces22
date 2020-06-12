@@ -51,7 +51,6 @@ class Placar:
     
         self.screen.blit(text1, [40, 0])
         self.screen.blit(text2, [WIDTH - 150, 0])
-        pygame.display.flip()
 
     def get_placar(self):   
         return self.score1, self.score2
@@ -87,8 +86,9 @@ class Round:
     def render_round(self):
         """ Imprime  o round do jogo """
         round_font = pygame.font.SysFont("comicsans", 45)
-        EndGame.print_text(self, self.screen, "Round "+str(self.round_no), (WIDTH/2, 20), round_font, BLACK)
-        EndGame.print_text(self ,self.screen, str(self.round_p1) + " : " + str(self.round_p2), (WIDTH / 2, 50), round_font, BLACK)
+        event = EndGame()
+        event.print_text(self.screen, "Round "+str(self.round_no), (WIDTH/2, 20), round_font, BLACK)
+        event.print_text(self.screen, str(self.round_p1) + " : " + str(self.round_p2), (WIDTH / 2, 50), round_font, BLACK)
 
     def get_round(self):
         return self.round_no, self.round_p1, self.round_p2
@@ -126,7 +126,7 @@ class Round:
     def  get_winner(self,player,state,screen,speed)->None:
         """ Define o vencedor """
         event = EndGame()
-        if event.end(state, speed, event.game_end(screen,player)):
+        if event.end(state,speed, event.game_end(screen,player)):
             #Modifica musica aqui
             return
         else:
